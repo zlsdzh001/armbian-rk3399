@@ -105,7 +105,7 @@ jobs:
       - name: Build [ ${{ matrix.board }} - ${{ matrix.release }} - ${{ inputs.branch }} ]
         run: |
           pushd build
-          ./compile.sh build BOARD=${{ matrix.board }} \
+          bash ./compile.sh build BOARD=${{ matrix.board }} \
           BRANCH=${{ inputs.branch }} \
           BUILD_DESKTOP=no BUILD_MINIMAL=no \
           KERNEL_CONFIGURE=no \

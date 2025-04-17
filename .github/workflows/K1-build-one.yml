@@ -1,8 +1,20 @@
-name: A3-build-all-desktop
+name: K1-build-one
 
 on:
   workflow_dispatch:
     inputs:
+
+      board:
+        description: 'Target Board'
+        required: true
+        type: choice
+        options:
+          - rk-sapphire
+          - fmx1
+          - nanopim4v2
+          - rock-4b
+        default: "rk-sapphire"
+
       version:
         description: 'Armbian Version'
         required: true
@@ -23,6 +35,37 @@ on:
           - vendor
         default: current
 
+      release:
+        description: 'Release Version'
+        required: true
+        type: choice
+        options:
+          - bookworm
+          - jammy
+          - noble
+        default: bookworm
+
+      system:
+        description: 'System Type'
+        required: true
+        type: choice
+        options:
+          - minimal
+          - server
+          - desktop
+        default: minimal
+
+      desktop:
+        description: 'Desktop Type (if system is desktop)'
+        required: false
+        type: choice
+        options:
+          - xfce
+          - cinnamon
+          - gnome
+          - i3-wm
+        default: xfce
+
       bspfreeze:
         description: 'Freeze BSP'
         required: false
@@ -41,26 +84,18 @@ on:
           - Armbian-unofficial
         default: Armbian
 
+      suffix:
+        description: 'Tag suffix'
+        required: false
+        type: choice
+        options:
+          - test
+          - ''
+        default: test
+
 jobs:
   build:
     runs-on: ubuntu-22.04
-
-    strategy:
-      matrix:
-        board:
-          - rk-sapphire
-          - fmx1
-          - nanopim4v2
-          - rock-4b
-        release:
-          - bookworm
-          - jammy
-          - noble
-        desktop:
-          - xfce
-          - cinnamon
-          - gnome
-          - i3-wm
 
     steps:
 
@@ -111,24 +146,39 @@ jobs:
         env:
           DESKTOP_APPGROUPS: "browsers chat desktop_tools editors email internet multimedia office programming remote_desktop"
         run: |
-          echo "Setting up for desktop system..."
-          SYSTEM_ARGS="BUILD_DESKTOP=yes BUILD_MINIMAL=no DESKTOP_ENVIRONMENT=${{ matrix.desktop }} \
-                DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base \
-                DESKTOP_APPGROUPS_SELECTED=\"${{ env.DESKTOP_APPGROUPS }}\""
+          if [ "${{ inputs.system }}" == "minimal" ]; then
+            echo "Setting up for minimal system..."
+            SYSTEM_ARGS="BUILD_DESKTOP=no BUILD_MINIMAL=yes"
+          elif [ "${{ inputs.system }}" == "server" ]; then
+            echo "Setting up for server system..."
+            SYSTEM_ARGS="BUILD_DESKTOP=no BUILD_MINIMAL=no"
+          elif [ "${{ inputs.system }}" == "desktop" ]; then
+            echo "Setting up for desktop system..."
+            SYSTEM_ARGS="BUILD_DESKTOP=yes BUILD_MINIMAL=no DESKTOP_ENVIRONMENT=${{ inputs.desktop }} \
+                  DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base \
+                  DESKTOP_APPGROUPS_SELECTED=\"${{ env.DESKTOP_APPGROUPS }}\""
+          fi
           echo "BUILD_ARGS=$SYSTEM_ARGS" >> $GITHUB_ENV
+
+          if [ "${{ inputs.suffix }}" == "test" ]; then
+            echo "BUILD_TAG=_test" >> $GITHUB_ENV
+          else
+            echo "BUILD_TAG=" >> $GITHUB_ENV
+          fi
 
       - name: Show environment
         run: |
           echo "env.BUILD_ARGS: ${{ env.BUILD_ARGS }}"
+          echo "env.BUILD_TAG: ${{ env.BUILD_TAG }}"
 
-      - name: Build [ ${{ matrix.board }} - ${{ matrix.release }} - ${{ inputs.branch }} - ${{ matrix.desktop }}]
+      - name: Build [ ${{ inputs.board }} - ${{ inputs.release }} - ${{ inputs.branch }} - ${{ inputs.system }} ]
         run: |
           pushd build
-          bash ./compile.sh build BOARD=${{ matrix.board }} \
+          bash ./compile.sh build BOARD=${{ inputs.board }} \
           BRANCH=${{ inputs.branch }} \
           ${{ env.BUILD_ARGS }} \
           KERNEL_CONFIGURE=no \
-          RELEASE=${{ matrix.release }} \
+          RELEASE=${{ inputs.release }} \
           COMPRESS_OUTPUTIMAGE=sha,img,xz \
           BSPFREEZE=${{ inputs.bspfreeze }} \
           VENDOR=${{ inputs.vendor }}
@@ -147,7 +197,7 @@ jobs:
         uses: ncipollo/release-action@main
         if: success()
         with:
-          tag: "${{ inputs.vendor }}_${{ inputs.version }}_${{ matrix.release }}_${{ inputs.branch }}_desktop_${{ env.buildtime }}"
+          tag: "${{ inputs.vendor }}_${{ inputs.version }}_${{ inputs.release }}_${{ inputs.branch }}_${{ inputs.system }}_${{ env.buildtime }}${{ env.BUILD_TAG }}"
           artifacts: "${{ github.workspace }}/build/output/images/*"
           allowUpdates: true
           removeArtifacts: false

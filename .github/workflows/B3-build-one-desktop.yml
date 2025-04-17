@@ -1,8 +1,20 @@
-name: A3-build-all-desktop
+name: B3-build-one-desktop
 
 on:
   workflow_dispatch:
     inputs:
+
+      board:
+        description: 'Target Board'
+        required: true
+        type: choice
+        options:
+          - rk-sapphire
+          - fmx1
+          - nanopim4v2
+          - rock-4b
+        default: "rk-sapphire"
+
       version:
         description: 'Armbian Version'
         required: true
@@ -47,11 +59,6 @@ jobs:
 
     strategy:
       matrix:
-        board:
-          - rk-sapphire
-          - fmx1
-          - nanopim4v2
-          - rock-4b
         release:
           - bookworm
           - jammy
@@ -121,10 +128,10 @@ jobs:
         run: |
           echo "env.BUILD_ARGS: ${{ env.BUILD_ARGS }}"
 
-      - name: Build [ ${{ matrix.board }} - ${{ matrix.release }} - ${{ inputs.branch }} - ${{ matrix.desktop }}]
+      - name: Build [ ${{ inputs.board }} - ${{ matrix.release }} - ${{ inputs.branch }} - ${{ matrix.desktop }}]
         run: |
           pushd build
-          bash ./compile.sh build BOARD=${{ matrix.board }} \
+          bash ./compile.sh build BOARD=${{ inputs.board }} \
           BRANCH=${{ inputs.branch }} \
           ${{ env.BUILD_ARGS }} \
           KERNEL_CONFIGURE=no \
