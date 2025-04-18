@@ -52,6 +52,7 @@ jobs:
           - fmx1
           - nanopim4v2
           - rock-4b
+          - aio-3399c-ai
         release:
           - bookworm
           - jammy

@@ -13,6 +13,7 @@ on:
           - fmx1
           - nanopim4v2
           - rock-4b
+          - aio-3399c-ai
         default: "rk-sapphire"
 
       version:
