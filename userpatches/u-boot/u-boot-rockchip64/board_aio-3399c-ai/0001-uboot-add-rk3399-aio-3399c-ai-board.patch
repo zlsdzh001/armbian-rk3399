@@ -1,4 +1,4 @@
-From c72b99955a77e8f3da05a4774874e61df2b1ca8a Mon Sep 17 00:00:00 2001
+From e3ab549b0c1e41c297a5d9a818431314b8a914c4 Mon Sep 17 00:00:00 2001
 From: foo <foo@bar.com>
 Date: Sat, 23 Nov 2024 00:41:10 +0800
 Subject: [PATCH] uboot add rk3399 aio-3399c-ai board
@@ -7,9 +7,9 @@ Signed-off-by: kaixinos <kaixinos@outlook.com>
 ---
  arch/arm/dts/Makefile                        |   1 +
  arch/arm/dts/rk3399-aio-3399c-ai-u-boot.dtsi |  30 +
- arch/arm/dts/rk3399-aio-3399c-ai.dts         | 767 +++++++++++++++++++
+ arch/arm/dts/rk3399-aio-3399c-ai.dts         | 765 +++++++++++++++++++
  configs/aio-3399c-ai-rk3399_defconfig        |  79 ++
- 4 files changed, 877 insertions(+)
+ 4 files changed, 875 insertions(+)
  create mode 100644 arch/arm/dts/rk3399-aio-3399c-ai-u-boot.dtsi
  create mode 100644 arch/arm/dts/rk3399-aio-3399c-ai.dts
  create mode 100644 configs/aio-3399c-ai-rk3399_defconfig
@@ -64,10 +64,10 @@ index 00000000..81e65b3a
 +};
 diff --git a/arch/arm/dts/rk3399-aio-3399c-ai.dts b/arch/arm/dts/rk3399-aio-3399c-ai.dts
 new file mode 100644
-index 00000000..bd1fcecc
+index 00000000..15b77204
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-aio-3399c-ai.dts
-@@ -0,0 +1,767 @@
+@@ -0,0 +1,765 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (C) 2025 kaixinos <kaixinos@outlook.com>
@@ -550,9 +550,7 @@ index 00000000..bd1fcecc
 +};
 +
 +&i2c3 {
-+	i2c-scl-rising-time-ns = <450>;
-+	i2c-scl-falling-time-ns = <15>;
-+	status = "okay";
++	status = "disabled";
 +};
 +
 +&i2c4 {

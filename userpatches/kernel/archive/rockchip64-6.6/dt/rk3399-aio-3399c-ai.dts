@@ -505,9 +505,7 @@
 };
 
 &i2c3 {
-	i2c-scl-rising-time-ns = <450>;
-	i2c-scl-falling-time-ns = <15>;
-	status = "okay";
+	status = "disabled";
 };
 
 &i2c4 {
