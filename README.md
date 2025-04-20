@@ -1,9 +1,12 @@
 ## Devices
 
-| Board  | DDR | WIFI/BT |
-| ---- | ---- | ---- |
-| rk-sapphire | LPDDR3 | - |
-| rk-excavator | LPDDR3 | AP6354 |
-| rock-4b | LPDDR4 | AP6256 |
-| nanopim4v2 | LPDDR4 | AP6356S |
-| fmx1 | LPDDR3 | AP6356S |
+| Board  | DDR | DDR Part Number* | WIFI/BT |
+| ---- | ---- | ---- | ---- |
+| rk-sapphire | LPDDR3 | K4E6E304EB-EGCF | - |
+| rk-excavator | LPDDR3 | K4E6E304EB-EGCF | AP6354 |
+| rock-4b | LPDDR4 | MT53E512M32D4NQ-053 | AP6256 |
+| nanopim4v2 | LPDDR4 | RS512M32LZ4D2ANP-75BT | AP6356S |
+| fmx1 | LPDDR3 | K4E6E304EB-EGCF | AP6356S |
+| aio-3399c-ai | LPDDR4 | K4F6E3S4HM-GGCJ | AP6256 |
+
+DDR Part Number* : Different hardware versions may have different Part Numbers.
