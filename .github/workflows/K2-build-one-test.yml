@@ -1,4 +1,4 @@
-name: K1-build-one
+name: K2-build-one-test
 
 on:
   workflow_dispatch:
@@ -184,17 +184,12 @@ jobs:
         with:
           tag: "${{ inputs.vendor }}_${{ inputs.version }}_${{ inputs.release }}_${{ inputs.branch }}_${{ inputs.system }}_${{ env.buildtime }}"
           artifacts: "${{ github.workspace }}/build/output/images/*"
-          allowUpdates: true
-          removeArtifacts: false
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            ### Armbian Image information
-            - Default username: root
-            - Default password: 1234
-            - Change apt source: armbian-apt
-            - Config command: armbian-config
-            - Upgrade command: armbian-upgrade
-            - Install command: armbian-install
-          draft: false
-          prerelease: false
+
+
+      - name: Upload images
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: ${{ inputs.version }}-${{ inputs.board }}-${{ inputs.release }}-${{ inputs.branch }}-${{ inputs.system }}
+          path: "${{ github.workspace }}/build/output/images/"
+          retention-days: 30

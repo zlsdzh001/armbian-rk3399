@@ -49,9 +49,9 @@ jobs:
       matrix:
         board:
           - rk-sapphire
-          - fmx1
-          - nanopim4v2
           - rock-4b
+          - nanopim4v2
+          - fmx1
           - aio-3399c-ai
         release:
           - bookworm
