@@ -64,6 +64,7 @@ jobs:
           - nanopim4v2
           - fmx1
           - aio-3399c-ai
+          - verypc-d039
         release:
           - bookworm
           - jammy
