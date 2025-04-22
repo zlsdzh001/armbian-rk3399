@@ -54,6 +54,7 @@ jobs:
           - fmx1
           - aio-3399c-ai
           - verypc-d039
+          - yskj
         release:
           - bookworm
           - jammy
