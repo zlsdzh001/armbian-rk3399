@@ -112,7 +112,7 @@ jobs:
         run: |
           cp -rvf userpatches build/
 
-      - name: Build [ ${{ inputs.board }} - ${{ matrix.release }} - ${{ inputs.branch }} ]
+      - name: Build [ ${{ inputs.version }} - ${{ inputs.board }} - ${{ matrix.release }} - ${{ inputs.branch }} ]
         run: |
           pushd build
           bash ./compile.sh build BOARD=${{ inputs.board }} \

@@ -130,7 +130,7 @@ jobs:
         run: |
           echo "env.BUILD_ARGS: ${{ env.BUILD_ARGS }}"
 
-      - name: Build [ ${{ matrix.board }} - ${{ matrix.release }} - ${{ inputs.branch }} - ${{ inputs.desktop }}]
+      - name: Build [ ${{ inputs.version }} - ${{ matrix.board }} - ${{ matrix.release }} - ${{ inputs.branch }} - ${{ inputs.desktop }}]
         run: |
           pushd build
           bash ./compile.sh build BOARD=${{ matrix.board }} \

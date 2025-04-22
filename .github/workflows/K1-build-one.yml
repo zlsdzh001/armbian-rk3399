@@ -158,7 +158,7 @@ jobs:
         run: |
           echo "env.BUILD_ARGS: ${{ env.BUILD_ARGS }}"
 
-      - name: Build [ ${{ inputs.board }} - ${{ inputs.release }} - ${{ inputs.branch }} - ${{ inputs.system }} ]
+      - name: Build [ ${{ inputs.version }} - ${{ inputs.board }} - ${{ inputs.release }} - ${{ inputs.branch }} - ${{ inputs.system }} ]
         run: |
           pushd build
           bash ./compile.sh build BOARD=${{ inputs.board }} \
