@@ -1,5 +1,5 @@
-From 3de0c6805fc3ee14d2a095f3a92479656c0a91b9 Mon Sep 17 00:00:00 2001
-From: foo <foo@bar.com>
+From a95633ef7c5d912f6652508af206ccd1bf787398 Mon Sep 17 00:00:00 2001
+From: kaixinos <kaixinos@outlook.com>
 Date: Fri, 22 Nov 2024 23:30:58 +0800
 Subject: [PATCH] uboot add rk3399 rk-sapphire board
 

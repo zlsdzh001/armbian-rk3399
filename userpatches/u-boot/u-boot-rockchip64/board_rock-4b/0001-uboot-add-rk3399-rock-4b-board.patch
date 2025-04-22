@@ -1,5 +1,5 @@
-From b4bba6f4c238f10b061a4e9a657c132b3f90c341 Mon Sep 17 00:00:00 2001
-From: foo <foo@bar.com>
+From c39ee0af3243574d762c118cfd937d48ec3cf922 Mon Sep 17 00:00:00 2001
+From: kaixinos <kaixinos@outlook.com>
 Date: Sat, 23 Nov 2024 00:41:10 +0800
 Subject: [PATCH] uboot add rk3399 rock-4b board
 

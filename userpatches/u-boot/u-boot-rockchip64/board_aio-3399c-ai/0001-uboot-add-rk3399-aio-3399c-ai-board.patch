@@ -1,5 +1,5 @@
-From e3ab549b0c1e41c297a5d9a818431314b8a914c4 Mon Sep 17 00:00:00 2001
-From: foo <foo@bar.com>
+From abd49824e8299bfc46c0667dc2fd241e90c4ba9c Mon Sep 17 00:00:00 2001
+From: kaixinos <kaixinos@outlook.com>
 Date: Sat, 23 Nov 2024 00:41:10 +0800
 Subject: [PATCH] uboot add rk3399 aio-3399c-ai board
 
