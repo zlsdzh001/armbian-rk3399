@@ -16,6 +16,7 @@ on:
           - aio-3399c-ai
           - verypc-d039
           - yskj
+          - dg3399
         default: "rk-sapphire"
 
       version:

@@ -10,5 +10,6 @@
 | aio-3399c-ai | LPDDR4 | K4F6E3S4HM-GGCJ | AP6256 |
 | verypc-d039 | LPDDR4X | CXDB4ABAM-MK | AP6356S |
 | yskj | LPDDR4 | TM16G32MD4LDA1-I4 | - |
+| dg3399 | DDR3 | H5TQ4G63CFR-RDC | AP6212 |
 
 DDR Part Number* : Different hardware versions may have different Part Numbers.
