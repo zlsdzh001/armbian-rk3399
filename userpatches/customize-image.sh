@@ -24,6 +24,11 @@ Main() {
 		chmod 755 "$apt_file"
 	fi
 
+	cmd_file="/etc/update-motd.d/41-commands"
+	if [ -f "$cmd_file" ]; then
+		sed -i '/"Configuration"/{s/^\([ \t]*\)/\1"Change Source","","armbian-apt","true"\n&/;}' "$cmd_file"
+	fi
+
 	apt update
 	apt install -y bash-completion net-tools vim
 	apt clean
