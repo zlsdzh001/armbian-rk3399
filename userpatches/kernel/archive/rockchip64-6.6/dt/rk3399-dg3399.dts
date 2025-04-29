@@ -566,7 +566,7 @@
 	status = "okay";
 
 	bluetooth {
-		compatible = "brcm,bcm43430";
+		compatible = "brcm,bcm43430a1-bt";
 		clocks = <&rk808 1>;
 		clock-names = "ext_clock";
 		shutdown-gpios = <&gpio0 RK_PB1 GPIO_ACTIVE_HIGH>;
