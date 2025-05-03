@@ -1,4 +1,4 @@
-From 50eac04d14c746e00549a867d1f8df77442b6d75 Mon Sep 17 00:00:00 2001
+From 51b0d74eff95c954b2bb540ce0c36c354f2066b1 Mon Sep 17 00:00:00 2001
 From: kaixinos <kaixinos@outlook.com>
 Date: Tue, 1 Apr 2025 23:42:21 +0800
 Subject: [PATCH] uboot add rk3399 fmx1 board
@@ -8,8 +8,8 @@ Signed-off-by: kaixinos <kaixinos@outlook.com>
  arch/arm/dts/Makefile                |   1 +
  arch/arm/dts/rk3399-fmx1-u-boot.dtsi |  17 +
  arch/arm/dts/rk3399-fmx1.dts         | 748 +++++++++++++++++++++++++++
- configs/fmx1-rk3399_defconfig        |  79 +++
- 4 files changed, 845 insertions(+)
+ configs/fmx1-rk3399_defconfig        |  78 +++
+ 4 files changed, 844 insertions(+)
  create mode 100644 arch/arm/dts/rk3399-fmx1-u-boot.dtsi
  create mode 100644 arch/arm/dts/rk3399-fmx1.dts
  create mode 100644 configs/fmx1-rk3399_defconfig
@@ -51,7 +51,7 @@ index 00000000..e237a7a4
 +};
 diff --git a/arch/arm/dts/rk3399-fmx1.dts b/arch/arm/dts/rk3399-fmx1.dts
 new file mode 100644
-index 00000000..45639ac7
+index 00000000..97051ad9
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-fmx1.dts
 @@ -0,0 +1,748 @@
@@ -805,10 +805,10 @@ index 00000000..45639ac7
 +};
 diff --git a/configs/fmx1-rk3399_defconfig b/configs/fmx1-rk3399_defconfig
 new file mode 100644
-index 00000000..06ceb0f9
+index 00000000..5a09ab25
 --- /dev/null
 +++ b/configs/fmx1-rk3399_defconfig
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,78 @@
 +CONFIG_ARM=y
 +CONFIG_SKIP_LOWLEVEL_INIT=y
 +CONFIG_ARCH_ROCKCHIP=y
@@ -862,7 +862,6 @@ index 00000000..06ceb0f9
 +CONFIG_REGULATOR_PWM=y
 +CONFIG_REGULATOR_RK8XX=y
 +CONFIG_PWM_ROCKCHIP=y
-+CONFIG_RAM_RK3399_LPDDR4=y
 +CONFIG_DM_RESET=y
 +CONFIG_BAUDRATE=1500000
 +CONFIG_DEBUG_UART_SHIFT=2
