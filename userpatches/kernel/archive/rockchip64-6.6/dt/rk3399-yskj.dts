@@ -210,8 +210,8 @@
 };
 
 &gpu {
-	mali-supply = <&vdd_gpu>;
 	status = "okay";
+	mali-supply = <&vdd_gpu>;
 };
 
 &vpu {
@@ -223,6 +223,7 @@
 };
 
 &gmac {
+	status = "okay";
 	assigned-clock-parents = <&clkin_gmac>;
 	assigned-clocks = <&cru SCLK_RMII_SRC>;
 	clock_in_out = "input";
@@ -233,7 +234,6 @@
 	phy-handle = <&rtl8211e>;
 	tx_delay = <0x35>;
 	rx_delay = <0x29>;
-	status = "okay";
 
 	mdio {
 		compatible = "snps,dwmac-mdio";
@@ -252,10 +252,10 @@
 };
 
 &i2c0 {
+	status = "okay";
 	clock-frequency = <400000>;
 	i2c-scl-rising-time-ns = <168>;
 	i2c-scl-falling-time-ns = <4>;
-	status = "okay";
 
 	rk808: pmic@1b {
 		compatible = "rockchip,rk808";
@@ -567,9 +567,9 @@
 };
 
 &uart0 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart0_xfer &uart0_cts>;
-	status = "okay";
 };
 
 &uart2 {
@@ -605,11 +605,11 @@
 };
 
 &sdhci {
+	status = "okay";
 	bus-width = <8>;
 	mmc-hs400-1_8v;
 	mmc-hs400-enhanced-strobe;
 	non-removable;
-	status = "okay";
 };
 
 &sdmmc {
@@ -635,8 +635,8 @@
 };
 
 &tcphy0 {
-	extcon = <&usbc0>;
 	status = "okay";
+	extcon = <&usbc0>;
 };
 
 &tcphy0_dp {
@@ -668,8 +668,8 @@
 	};
 
 	u2phy0_host: host-port {
-		phy-supply = <&vcc5v0_host>;
 		status = "okay";
+		phy-supply = <&vcc5v0_host>;
 	};
 
 	port {
@@ -687,8 +687,8 @@
 	};
 
 	u2phy1_host: host-port {
-		phy-supply = <&vcc5v0_host>;
 		status = "okay";
+		phy-supply = <&vcc5v0_host>;
 	};
 };
 
@@ -744,9 +744,9 @@
 };
 
 &hdmi {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&hdmi_i2c_xfer>, <&hdmi_cec>;
-	status = "okay";
 };
 
 &hdmi_in_vopb {

@@ -117,11 +117,11 @@
 	 * from  R90030 DNP R0805 pin2  to  C90002 10uF C0805 pin1 (vcc_sys).
 	 */
 	fan0: gpio-fan {
+		status = "okay";
 		#cooling-cells = <2>;
 		compatible = "gpio-fan";
 		gpio-fan,speed-map = <0 0 3000 1>;
 		gpios = <&gpio1 RK_PC2 GPIO_ACTIVE_HIGH>;
-		status = "okay";
 	};
 
 	gpio-keys {
@@ -219,8 +219,8 @@
 };
 
 &gpu {
-	mali-supply = <&vdd_gpu>;
 	status = "okay";
+	mali-supply = <&vdd_gpu>;
 };
 
 &vpu {
@@ -232,6 +232,7 @@
 };
 
 &gmac {
+	status = "okay";
 	assigned-clock-parents = <&clkin_gmac>;
 	assigned-clocks = <&cru SCLK_RMII_SRC>;
 	clock_in_out = "input";
@@ -244,14 +245,13 @@
 	snps,reset-delays-us = <0 10000 50000>;
 	tx_delay = <0x28>;
 	rx_delay = <0x11>;
-	status = "okay";
 };
 
 &i2c0 {
+	status = "okay";
 	clock-frequency = <400000>;
 	i2c-scl-rising-time-ns = <168>;
 	i2c-scl-falling-time-ns = <4>;
-	status = "okay";
 
 	rk808: pmic@1b {
 		compatible = "rockchip,rk808";
@@ -492,15 +492,15 @@
 };
 
 &i2c1 {
+	status = "okay";
 	i2c-scl-rising-time-ns = <300>;
 	i2c-scl-falling-time-ns = <15>;
-	status = "okay";
 };
 
 &i2c3 {
+	status = "okay";
 	i2c-scl-rising-time-ns = <450>;
 	i2c-scl-falling-time-ns = <15>;
-	status = "okay";
 };
 
 &i2c4 {
@@ -563,9 +563,9 @@
 };
 
 &uart0 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart0_xfer &uart0_cts &uart0_rts>;
-	status = "okay";
 };
 
 &uart2 {
@@ -605,15 +605,16 @@
 };
 
 &sdhci {
+	status = "okay";
 	//max-frequency = <150000000>;
 	bus-width = <8>;
 	mmc-hs400-1_8v;
 	mmc-hs400-enhanced-strobe;
 	non-removable;
-	status = "okay";
 };
 
 &sdmmc {
+	status = "okay";
 	clock-frequency = <150000000>;
 	max-frequency = <150000000>;
 	bus-width = <4>;
@@ -627,7 +628,6 @@
 	vmmc-supply = <&vcc3v0_sd>;
 	vqmmc-supply = <&vcc_sdio>;
 	//card-detect-delay = <800>;
-	status = "okay";
 };
 
 &sdio0 {
@@ -649,8 +649,8 @@
 };
 
 &tcphy0 {
-	extcon = <&usbc0>;
 	status = "okay";
+	extcon = <&usbc0>;
 };
 
 &tcphy0_dp {
@@ -682,8 +682,8 @@
 	};
 
 	u2phy0_host: host-port {
-		phy-supply = <&vcc5v0_host>;
 		status = "okay";
+		phy-supply = <&vcc5v0_host>;
 	};
 
 	port {
@@ -701,8 +701,8 @@
 	};
 
 	u2phy1_host: host-port {
-		phy-supply = <&vcc5v0_host>;
 		status = "okay";
+		phy-supply = <&vcc5v0_host>;
 	};
 };
 
@@ -758,10 +758,10 @@
 };
 
 &hdmi {
+	status = "okay";
 	ddc-i2c-bus = <&i2c3>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&hdmi_cec>;
-	status = "okay";
 };
 
 &hdmi_in_vopb {

@@ -224,8 +224,8 @@
 };
 
 &gpu {
-	mali-supply = <&vdd_gpu>;
 	status = "okay";
+	mali-supply = <&vdd_gpu>;
 };
 
 &vpu {
@@ -237,6 +237,7 @@
 };
 
 &gmac {
+	status = "okay";
 	assigned-clock-parents = <&clkin_gmac>;
 	assigned-clocks = <&cru SCLK_RMII_SRC>;
 	clock_in_out = "input";
@@ -249,14 +250,13 @@
 	snps,reset-delays-us = <0 10000 50000>;
 	tx_delay = <0x2B>;
 	rx_delay = <0x23>;
-	status = "okay";
 };
 
 &i2c0 {
+	status = "okay";
 	clock-frequency = <400000>;
 	i2c-scl-rising-time-ns = <168>;
 	i2c-scl-falling-time-ns = <4>;
-	status = "okay";
 
 	rk808: pmic@1b {
 		compatible = "rockchip,rk808";
@@ -499,9 +499,9 @@
 };
 
 &i2c1 {
+	status = "okay";
 	i2c-scl-rising-time-ns = <300>;
 	i2c-scl-falling-time-ns = <15>;
-	status = "okay";
 };
 
 &i2c3 {
@@ -515,9 +515,9 @@
 };
 
 &uart0 {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart0_xfer &uart0_cts &uart0_rts>;
-	status = "okay";
 
 	bluetooth {
 		compatible = "brcm,bcm4345c5";
@@ -571,6 +571,7 @@
 };
 
 &sdhci {
+	status = "okay";
 	//max-frequency = <150000000>;
 	bus-width = <8>;
 	mmc-hs200-1_8v;
@@ -578,10 +579,10 @@
 	//mmc-hs400-enhanced-strobe;
 	//keep-power-in-suspend;
 	non-removable;
-	status = "okay";
 };
 
 &sdmmc {
+	status = "okay";
 	clock-frequency = <150000000>;
 	max-frequency = <150000000>;
 	bus-width = <4>;
@@ -594,10 +595,10 @@
 	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
 	vmmc-supply = <&vcc3v3_sd>;
 	vqmmc-supply = <&vcc_sdio>;
-	status = "okay";
 };
 
 &sdio0 {
+	status = "okay";
 	#address-cells = <1>;
 	#size-cells = <0>;
 
@@ -613,7 +614,6 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&sdio0_bus4 &sdio0_cmd &sdio0_clk>;
 	sd-uhs-sdr104;
-	status = "okay";
 
 	brcmf: wifi@1 {
 		compatible = "brcm,bcm4329-fmac";
@@ -651,13 +651,13 @@
 	status = "okay";
 
 	u2phy0_otg: otg-port {
-		vbus-supply = <&vcc5v0_typec>;
 		status = "okay";
+		vbus-supply = <&vcc5v0_typec>;
 	};
 
 	u2phy0_host: host-port {
-		phy-supply = <&vcc5v0_host>;
 		status = "okay";
+		phy-supply = <&vcc5v0_host>;
 	};
 };
 
@@ -669,8 +669,8 @@
 	};
 
 	u2phy1_host: host-port {
-		phy-supply = <&vcc5v0_host>;
 		status = "okay";
+		phy-supply = <&vcc5v0_host>;
 	};
 };
 
@@ -725,9 +725,9 @@
 };
 
 &hdmi {
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&hdmi_i2c_xfer>, <&hdmi_cec>;
-	status = "okay";
 };
 
 &hdmi_in_vopb {
