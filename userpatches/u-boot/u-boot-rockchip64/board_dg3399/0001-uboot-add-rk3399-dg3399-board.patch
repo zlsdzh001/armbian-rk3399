@@ -1,4 +1,4 @@
-From f34cf92bc24c4f3edefced2dac479885f7d580d3 Mon Sep 17 00:00:00 2001
+From e024575c5bd74d05515551cbcfb0b011985575e8 Mon Sep 17 00:00:00 2001
 From: kaixinos <kaixinos@outlook.com>
 Date: Sat, 23 Nov 2024 16:40:00 +0800
 Subject: [PATCH] uboot add rk3399 dg3399 board
@@ -8,8 +8,8 @@ Signed-off-by: kaixinos <kaixinos@outlook.com>
  arch/arm/dts/Makefile                  |   1 +
  arch/arm/dts/rk3399-dg3399-u-boot.dtsi |  17 +
  arch/arm/dts/rk3399-dg3399.dts         | 761 +++++++++++++++++++++++++
- configs/dg3399-rk3399_defconfig        |  79 +++
- 4 files changed, 858 insertions(+)
+ configs/dg3399-rk3399_defconfig        |  78 +++
+ 4 files changed, 857 insertions(+)
  create mode 100644 arch/arm/dts/rk3399-dg3399-u-boot.dtsi
  create mode 100644 arch/arm/dts/rk3399-dg3399.dts
  create mode 100644 configs/dg3399-rk3399_defconfig
@@ -818,10 +818,10 @@ index 00000000..40d5431f
 +};
 diff --git a/configs/dg3399-rk3399_defconfig b/configs/dg3399-rk3399_defconfig
 new file mode 100644
-index 00000000..c8bfedf0
+index 00000000..6627f642
 --- /dev/null
 +++ b/configs/dg3399-rk3399_defconfig
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,78 @@
 +CONFIG_ARM=y
 +CONFIG_SKIP_LOWLEVEL_INIT=y
 +CONFIG_ARCH_ROCKCHIP=y
@@ -875,7 +875,6 @@ index 00000000..c8bfedf0
 +CONFIG_REGULATOR_PWM=y
 +CONFIG_REGULATOR_RK8XX=y
 +CONFIG_PWM_ROCKCHIP=y
-+CONFIG_RAM_RK3399_LPDDR4=y
 +CONFIG_DM_RESET=y
 +CONFIG_BAUDRATE=1500000
 +CONFIG_DEBUG_UART_SHIFT=2
