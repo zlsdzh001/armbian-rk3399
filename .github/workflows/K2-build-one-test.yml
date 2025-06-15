@@ -182,17 +182,9 @@ jobs:
           echo "buildtime=$(date +"%Y.%m")" >> $GITHUB_ENV
 
       - name: Upload images
-        uses: ncipollo/release-action@main
-        if: success()
-        with:
-          tag: "${{ inputs.vendor }}_${{ inputs.version }}_${{ inputs.release }}_${{ inputs.branch }}_${{ inputs.system }}_${{ env.buildtime }}"
-          artifacts: "${{ github.workspace }}/build/output/images/*"
-
-
-      - name: Upload images
         uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: ${{ inputs.version }}-${{ inputs.board }}-${{ inputs.release }}-${{ inputs.branch }}-${{ inputs.system }}
+          name: "${{ inputs.version }}-${{ inputs.board }}-${{ inputs.release }}-${{ inputs.branch }}-${{ inputs.system }}"
           path: "${{ github.workspace }}/build/output/images/"
           retention-days: 30

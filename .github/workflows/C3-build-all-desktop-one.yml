@@ -157,7 +157,7 @@ jobs:
         uses: ncipollo/release-action@main
         if: success()
         with:
-          tag: "${{ inputs.vendor }}_${{ inputs.version }}_${{ matrix.release }}_${{ inputs.branch }}_desktop_${{ env.buildtime }}"
+          tag: "${{ inputs.vendor }}_${{ inputs.version }}_${{ matrix.release }}_${{ inputs.branch }}_desktop_b${{ env.buildtime }}"
           artifacts: "${{ github.workspace }}/build/output/images/*"
           allowUpdates: true
           removeArtifacts: false
