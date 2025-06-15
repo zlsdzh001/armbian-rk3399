@@ -639,7 +639,7 @@
 };
 
 &tcphy0 {
-	status = "disabled";
+	status = "okay";
 };
 
 &tcphy1 {
@@ -695,6 +695,7 @@
 
 &usbdrd_dwc3_0 {
 	status = "okay";
+	extcon = <&u2phy0>;
 	dr_mode = "otg";
 };
 
