@@ -63,7 +63,7 @@
 		regulator-max-microvolt = <1800000>;
 	};
 
-	vcc5v0_host: vcc5v0-host-regulator {
+	vcc5v0_host: vcc5v0-host {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_host";
 		enable-active-high;
@@ -74,7 +74,7 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
-	vcc5v0_typec: vcc5v0-typec-regulator {
+	vcc5v0_typec: vcc5v0-typec {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_typec";
 		enable-active-high;
@@ -95,9 +95,9 @@
 		vin-supply = <&vcc3v3_sys>;
 	};
 
-	vcc_phy: vcc-phy-regulator {
+	vcc3v3_lan: vcc3v3-lan {
 		compatible = "regulator-fixed";
-		regulator-name = "vcc_phy";
+		regulator-name = "vcc3v3_lan";
 		regulator-always-on;
 		regulator-boot-on;
 	};
@@ -226,7 +226,7 @@
 	assigned-clock-parents = <&clkin_gmac>;
 	assigned-clocks = <&cru SCLK_RMII_SRC>;
 	clock_in_out = "input";
-	phy-supply = <&vcc_phy>;
+	phy-supply = <&vcc3v3_lan>;
 	phy-mode = "rgmii";
 	pinctrl-names = "default";
 	pinctrl-0 = <&rgmii_pins>, <&phy_intb>, <&phy_rstb>;
