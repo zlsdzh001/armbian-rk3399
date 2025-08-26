@@ -86,7 +86,7 @@ jobs:
       - name: Install required packages
         run: |
           sudo apt update
-          sudo apt install -y neofetch
+          sudo apt install -y neofetch qemu-user-static
 
       - name: Show host info
         run: |
