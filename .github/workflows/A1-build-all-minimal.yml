@@ -117,6 +117,7 @@ jobs:
           RELEASE=${{ matrix.release }} \
           COMPRESS_OUTPUTIMAGE=sha,img,xz \
           BSPFREEZE=${{ inputs.bspfreeze }} \
+          IMAGE_VERSION=${{ inputs.version }} \
           VENDOR=${{ inputs.vendor }}
           popd
 
