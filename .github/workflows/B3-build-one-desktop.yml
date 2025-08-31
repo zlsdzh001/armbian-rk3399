@@ -18,6 +18,7 @@ on:
           - verypc-d039
           - yskj
           - dg3399
+          - h339pc
         default: "rk-sapphire"
 
       version:

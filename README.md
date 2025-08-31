@@ -12,5 +12,6 @@
 | verypc-d039 | LPDDR4X | CXDB4ABAM-MK | AP6356S |
 | yskj | LPDDR4 | TM16G32MD4LDA1-I4 | - |
 | dg3399 | DDR3 | H5TQ4G63CFR-RDC | AP6212 |
+| h339pc | DDR3 | PE025-125 | K019-CW43-DW |
 
 DDR Part Number* : Different hardware versions may have different Part Numbers.

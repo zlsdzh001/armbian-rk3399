@@ -68,6 +68,7 @@ jobs:
           - verypc-d039
           - yskj
           - dg3399
+          - h339pc
         release:
           - bookworm
           - jammy
