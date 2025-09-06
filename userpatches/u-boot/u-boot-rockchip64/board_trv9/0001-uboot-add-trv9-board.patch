@@ -1,15 +1,31 @@
+From 34f657a708b510ebf82705af93d2904922a46117 Mon Sep 17 00:00:00 2001
+From: kaixinos <kaixinos@outlook.com>
+Date: Sat, 23 Nov 2024 16:40:00 +0800
+Subject: [PATCH] uboot add rk3399 h339pc board
+
+Signed-off-by: kaixinos <kaixinos@outlook.com>
+---
+ arch/arm/dts/Makefile                  |   1 +
+ arch/arm/dts/rk3399-trv9-u-boot.dtsi   |  31 +
+ arch/arm/dts/rk3399-trv9.dts           | 838 +++++++++++++++++++++++++
+ configs/trv9-rk3399_defconfig          |  79 +++
+ 4 files changed, 949 insertions(+)
+ create mode 100644 arch/arm/dts/rk3399-trv9-u-boot.dtsi
+ create mode 100644 arch/arm/dts/rk3399-trv9.dts
+ create mode 100644 configs/trv9-rk3399_defconfig
+
 diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 9900b442..afa9ec81 100644
+index ee615e39..26235084 100644
 --- a/arch/arm/dts/Makefile
 +++ b/arch/arm/dts/Makefile
-@@ -128,6 +128,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3399) += \
- 	rk3399-nanopi-m4.dtb \
- 	rk3399-nanopi-m4-2gb.dtb \
- 	rk3399-nanopi-m4b.dtb \
-+	rk3399-trv9.dtb \
-	rk3399-nanopi-m4v2.dtb \
-	rk3399-nanopi-neo4.dtb \
-	rk3399-orangepi.dtb \
+@@ -144,6 +144,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3399) += \
+ 	rk3399-ficus.dtb \
+ 	rk3399-fine3399.dtb \
+ 	rk3399-firefly.dtb \
++	rk3399-h339pc.dtb \
+ 	rk3399-gru-bob.dtb \
+ 	rk3399-gru-kevin.dtb \
+ 	rk3399-kobol-helios64.dtb \
 diff --git a/arch/arm/dts/rk3399-trv9-u-boot.dtsi b/arch/arm/dts/rk3399-trv9-u-boot.dtsi
 new file mode 100644
 index 00000000..4b775f6d
