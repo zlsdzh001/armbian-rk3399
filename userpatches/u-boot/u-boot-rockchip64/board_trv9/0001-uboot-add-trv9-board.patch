@@ -7,9 +7,9 @@ index 9900b442..afa9ec81 100644
  	rk3399-nanopi-m4-2gb.dtb \
  	rk3399-nanopi-m4b.dtb \
 +	rk3399-trv9.dtb \
- 	rk3399-nanopi-neo4.dtb \
- 	rk3399-orangepi.dtb \
- 	rk3399-pinebook-pro.dtb \
+	rk3399-nanopi-m4v2.dtb \
+	rk3399-nanopi-neo4.dtb \
+	rk3399-orangepi.dtb \
 diff --git a/arch/arm/dts/rk3399-trv9-u-boot.dtsi b/arch/arm/dts/rk3399-trv9-u-boot.dtsi
 new file mode 100644
 index 00000000..4b775f6d
