@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 /*
- * SPDX-License-Identifier: (GPL-2.0+ or MIT)
+ * Copyright (C) 2025 kaixinos <kaixinos@outlook.com>
  */
 
 /dts-v1/;
 #include <dt-bindings/input/linux-event-codes.h>
+#include <dt-bindings/leds/common.h>
 #include <dt-bindings/pwm/pwm.h>
 #include "rk3399.dtsi"
 
