@@ -7,9 +7,9 @@ Signed-off-by: kaixinos <kaixinos@outlook.com>
 ---
  arch/arm/dts/Makefile                  |   1 +
  arch/arm/dts/rk3399-trv9-u-boot.dtsi   |  13 +
- arch/arm/dts/rk3399-trv9.dts           | 884 +++++++++++++++++++++++++
+ arch/arm/dts/rk3399-trv9.dts           | 882 +++++++++++++++++++++++++
  configs/trv9-rk3399_defconfig          |  79 +++
- 4 files changed, 977 insertions(+)
+ 4 files changed, 975 insertions(+)
  create mode 100644 arch/arm/dts/rk3399-trv9-u-boot.dtsi
  create mode 100644 arch/arm/dts/rk3399-trv9.dts
  create mode 100644 configs/trv9-rk3399_defconfig
@@ -58,8 +58,6 @@ index 00000000..eac77f2a
 +
 +/dts-v1/;
 +#include <dt-bindings/input/linux-event-codes.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pwm/pwm.h>
 +#include "rk3399.dtsi"
 +#include "rk3399-opp.dtsi"
 +
