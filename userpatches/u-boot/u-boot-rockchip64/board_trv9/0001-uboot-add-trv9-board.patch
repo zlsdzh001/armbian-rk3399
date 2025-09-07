@@ -6,10 +6,10 @@ Subject: [PATCH] uboot add rk3399 h339pc board
 Signed-off-by: kaixinos <kaixinos@outlook.com>
 ---
  arch/arm/dts/Makefile                  |   1 +
- arch/arm/dts/rk3399-trv9-u-boot.dtsi   |  31 +
- arch/arm/dts/rk3399-trv9.dts           | 830 +++++++++++++++++++++++++
+ arch/arm/dts/rk3399-trv9-u-boot.dtsi   |  13 +
+ arch/arm/dts/rk3399-trv9.dts           | 945 +++++++++++++++++++++++++
  configs/trv9-rk3399_defconfig          |  79 +++
- 4 files changed, 941 insertions(+)
+ 4 files changed, 1038 insertions(+)
  create mode 100644 arch/arm/dts/rk3399-trv9-u-boot.dtsi
  create mode 100644 arch/arm/dts/rk3399-trv9.dts
  create mode 100644 configs/trv9-rk3399_defconfig
@@ -31,51 +31,36 @@ new file mode 100644
 index 00000000..4b775f6d
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-trv9-u-boot.dtsi
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,13 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * Copyright (C) 2019 Jagan Teki <jagan@amarulasolutions.com>
 + */
 +
-+#include "rk3399-nanopi4-u-boot.dtsi"
++#include "rk3399-u-boot.dtsi"
 +#include "rk3399-sdram-lpddr4-100.dtsi"
 +
 +/ {
 +	chosen {
-+		u-boot,spl-boot-order = &sdmmc, &sdhci;
++		u-boot,spl-boot-order = "same-as-spl", &sdhci, &sdmmc;
 +	};
-+};
-+
-+&sdio0 {
-+	status = "disabled";
-+};
-+
-+&vdd_center {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <950000>;
-+};
-+
-+&vdd_log {
-+	regulator-init-microvolt = <950000>;
-+};
-+
-+&pwm2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pwm2_pin>;
 +};
 diff --git a/arch/arm/dts/rk3399-trv9.dts b/arch/arm/dts/rk3399-trv9.dts
 new file mode 100644
 index 00000000..eac77f2a
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-trv9.dts
-@@ -0,0 +1,830 @@
+@@ -0,0 +1,810 @@
 +/*
 + * SPDX-License-Identifier: (GPL-2.0+ or MIT)
 + */
 +
 +/dts-v1/;
 +#include <dt-bindings/input/linux-event-codes.h>
++#include <dt-bindings/pwm/pwm.h>
++#include <dt-bindings/usb/pd.h>
 +#include "rk3399.dtsi"
++#include "rk3399-opp.dtsi"
 +
 +/ {
 +	model = "HPH TRV-9";
@@ -83,6 +68,10 @@ index 00000000..eac77f2a
 +
 +	chosen {
 +		stdout-path = "serial2:1500000n8";
++	};
++
++	aliases {
++		spi1 = &spi1;
 +	};
 +
 +	clkin_gmac: external-gmac-clock {
@@ -132,18 +121,20 @@ index 00000000..eac77f2a
 +		vin-supply = <&vcc_sys>;
 +	};
 +
-+	vcc1v8_sys: vcc1v8-sys {
++	vcc1v8_s0: vcc1v8-s0 {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc1v8_s0";
 +		regulator-min-microvolt = <1800000>;
 +		regulator-max-microvolt = <1800000>;
 +		regulator-always-on;
++		vin-supply = <&vcc3v3_sys>;
 +	};
 +
 +	vcc3v3_sys: vcc3v3-sys {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc3v3_sys";
 +		regulator-always-on;
++		regulator-boot-on;
 +		regulator-min-microvolt = <3300000>;
 +		regulator-max-microvolt = <3300000>;
 +		vin-supply = <&vcc_sys>;
@@ -194,6 +185,9 @@ index 00000000..eac77f2a
 +
 +	hdmi_sound: hdmi-sound {
 +		status = "okay";
++		compatible = "rockchip,rk3399-hdmi-dp";
++		rockchip,cpu = <&i2s2>;
++		rockchip,codec = <&hdmi>, <&cdn_dp>;
 +	};
 +
 +	spdif-sound {
@@ -292,11 +286,12 @@ index 00000000..eac77f2a
 +	status = "okay";
 +
 +	bluetooth {
-+		compatible = "brcm,bcm43438-bt";
++		compatible = "brcm,bcm4345c5";
 +		shutdown-gpios = <&gpio0 RK_PB1 GPIO_ACTIVE_HIGH>;
 +		device-wakeup-gpios = <&gpio2 RK_PD2 GPIO_ACTIVE_HIGH>;
++		host-wakeup-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_HIGH>;
 +		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_reg_on_h &bt_wake_l>;
++		pinctrl-0 = <&bt_host_wake &bt_wake &bt_reset>;
 +		clocks = <&rk808 1>;
 +		clock-names = "lpo";
 +		max-speed = <1500000>;
@@ -325,8 +320,6 @@ index 00000000..eac77f2a
 +
 +&vpu {
 +	status = "okay";
-+	/* 0 means ion, 1 means drm */
-+	//allocator = <0>;
 +};
 +
 +&rga {
@@ -336,10 +329,7 @@ index 00000000..eac77f2a
 +&cdn_dp {
 +	status = "okay";
 +	extcon = <&fusb0>;
-+};
-+
-+&i2c3 {
-+	status = "okay";
++	phys = <&tcphy0_dp>;
 +};
 +
 +&hdmi {
@@ -348,6 +338,7 @@ index 00000000..eac77f2a
 +	pinctrl-0 = <&hdmi_cec>;
 +	#sound-dai-cells = <0>;
 +	status = "okay";
++	rockchip,defaultmode = <16>; /* CEA 1920x1080@60Hz */
 +};
 +
 +&i2c0 {
@@ -445,8 +436,8 @@ index 00000000..eac77f2a
 +				regulator-name = "vcca1v8_hdmi";
 +				regulator-always-on;
 +				regulator-boot-on;
-+				regulator-min-microvolt = <3000000>;
-+				regulator-max-microvolt = <3000000>;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
 +				regulator-state-mem {
 +					regulator-on-in-suspend;
 +					regulator-suspend-microvolt = <1800000>;
@@ -474,7 +465,7 @@ index 00000000..eac77f2a
 +				regulator-init-microvolt = <3300000>;
 +				regulator-state-mem {
 +					regulator-on-in-suspend;
-+					regulator-suspend-microvolt = <3300000>;
++					regulator-suspend-microvolt = <3000000>;
 +				};
 +			};
 +
@@ -531,7 +522,7 @@ index 00000000..eac77f2a
 +				regulator-always-on;
 +				regulator-boot-on;
 +				regulator-state-mem {
-+					regulator-on-in-suspend;
++					regulator-off-in-suspend;
 +				};
 +			};
 +
@@ -540,7 +531,7 @@ index 00000000..eac77f2a
 +				regulator-always-on;
 +				regulator-boot-on;
 +				regulator-state-mem {
-+					regulator-on-in-suspend;
++					regulator-off-in-suspend;
 +				};
 +			};
 +		};
@@ -630,44 +621,92 @@ index 00000000..eac77f2a
 +	clock-frequency = <400000>;
 +
 +	fusb0: fusb30x@22 {
-+		compatible = "fairchild,fusb302";
++		compatible = "fcs,fusb302";
 +		reg = <0x22>;
 +		pinctrl-names = "default";
-+		pinctrl-0 = <&fusb0_int &fusb0_5v>;
-+		int-n-gpios = <&gpio1 RK_PA2 GPIO_ACTIVE_HIGH>;
-+		vbus-5v-gpios = <&gpio1 RK_PA3 GPIO_ACTIVE_LOW>;
++		pinctrl-0 = <&fusb0_int>;
++		interrupt-parent = <&gpio1>;
++		interrupts = <RK_PA2 IRQ_TYPE_LEVEL_LOW>;
++		vbus-supply = <&vcc5v0_host_regulator>;
 +		status = "okay";
++
++		connector {
++			compatible = "usb-c-connector";
++			data-role = "dual";
++			label = "USB-C";
++			op-sink-microwatt = <1000000>;
++			power-role = "dual";
++			sink-pdos =
++				<PDO_FIXED(5000, 2500, PDO_FIXED_USB_COMM)>;
++			source-pdos =
++				<PDO_FIXED(5000, 1400, PDO_FIXED_USB_COMM)>;
++			try-power-role = "sink";
++
++			extcon-cables = <1 2 5 6 9 10 12 44>;
++			typec-altmodes = <0xff01 1 0x001c0000 1>;
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					usbc_hs: endpoint {
++						remote-endpoint =
++							<&u2phy0_typec_hs>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					usbc_ss: endpoint {
++						remote-endpoint =
++							<&tcphy0_typec_ss>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					usbc_dp: endpoint {
++						remote-endpoint =
++							<&tcphy0_typec_dp>;
++					};
++				};
++			};
++		};
 +	};
 +};
 +
 +&spdif {
 +	status = "okay";
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&spdif_bus_1>;
++	pinctrl-0 = <&spdif_bus>;
 +};
 +
 +&i2s0 {
 +	status = "okay";
 +};
 +
-+/*
 +&i2s2 {
++	#sound-dai-cells = <0>;
 +	status = "okay";
 +};
-+*/
 +
 +&io_domains {
 +	status = "okay";
 +
-+	bt656-supply = <&vcc1v8_sys>;
-+	audio-supply = <&vcc1v8_sys>;
++	bt656-supply = <&vcc1v8_dvp>;
++	audio-supply = <&vcca1v8_codec>;
 +	sdmmc-supply = <&vcc_sdio>;
 +	gpio1830-supply = <&vcc_3v0>;
 +};
 +
 +&pmu_io_domains {
 +	status = "okay";
-+	pmu1830-supply = <&vcc1v8>;
++	pmu1830-supply = <&vcc_3v0>;
 +};
 +
 +&pcie_phy {
@@ -688,7 +727,7 @@ index 00000000..eac77f2a
 +&pwm2 {
 +	status = "okay";
 +	pinctrl-names = "active";
-+	pinctrl-0 = <&pwm2_pin>;
++	pinctrl-0 = <&pwm2_pin_pull_down>;
 +};
 +
 +&sdhci {
@@ -727,13 +766,12 @@ index 00000000..eac77f2a
 +	bus-width = <4>;
 +	cap-sd-highspeed;
 +	cap-mmc-highspeed;
++	cd-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
 +	disable-wp;
 +	clock-freq-min-max = <100000 100000000>;
 +	pinctrl-names = "default";
-+	//sd-uhs-sdr104;
-+	pinctrl-0 = <&sdmmc_bus4 &sdmmc_clk &sdmmc_cmd &sdmmc_cd>;
-+	supports-sd;
-+	num-slots = <1>;
++	pinctrl-0 = <&sdmmc_bus4 &sdmmc_clk &sdmmc_cmd &sdmmc0_det_l>;
++	vmmc-supply = <&vcc3v0_sd>;
 +	vqmmc-supply = <&vcc_sdio>;
 +	status = "okay";
 +};
@@ -752,38 +790,68 @@ index 00000000..eac77f2a
 +	status = "okay";
 +};
 +
++&tcphy0_dp {
++	port {
++		tcphy0_typec_dp: endpoint {
++			remote-endpoint = <&usbc_dp>;
++		};
++	};
++};
++
++&tcphy0_usb3 {
++	port {
++		tcphy0_typec_ss: endpoint {
++			remote-endpoint = <&usbc_ss>;
++		};
++	};
++};
++
 +&tcphy1 {
 +	status = "okay";
 +};
 +
 +&u2phy0 {
 +	status = "okay";
-+	extcon = <&fusb0>;
-+};
 +
-+&u2phy0_otg {
-+	status = "okay";
-+};
++	u2phy0_otg: otg-port {
++		status = "okay";
++	};
 +
-+&u2phy0_host {
-+	phy-supply = <&vcc5v0_host_regulator>;
-+	status = "okay";
++	u2phy0_host: host-port {
++		phy-supply = <&vcc5v0_host_regulator>;
++		status = "okay";
++	};
++
++	port {
++		u2phy0_typec_hs: endpoint {
++			remote-endpoint = <&usbc_hs>;
++		};
++	};
 +};
 +
 +&u2phy1 {
 +	status = "okay";
++
++	u2phy1_otg: otg-port {
++		status = "okay";
++	};
++
++	u2phy1_host: host-port {
++		phy-supply = <&vcc5v0_host_regulator>;
++		status = "okay";
++	};
 +};
 +
-+&u2phy1_otg {
++&usbdrd3_0 {
 +	status = "okay";
-+};
-+
-+&u2phy1_host {
-+	phy-supply = <&vcc5v0_host_regulator>;
-+	status = "okay";
++	extcon = <&fusb0>;
 +};
 +
 +&usbdrd3_1 {
++	status = "okay";
++};
++
++&usbdrd_dwc3_0 {
 +	status = "okay";
 +};
 +
@@ -830,10 +898,6 @@ index 00000000..eac77f2a
 +		fusb0_int: fusb0-int {
 +			rockchip,pins = <1 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>;
 +		};
-+
-+		fusb0_5v: fusb0-5v {
-+			rockchip,pins = <1 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
 +	};
 +
 +	sdio-pwrseq {
@@ -879,10 +943,15 @@ index 00000000..eac77f2a
 +	};
 +
 +	bt {
-+		bt_reg_on_h: bt-reg-on-h {
++		bt_host_wake: bt-host-wake {
++			rockchip,pins = <0 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++
++		bt_reset: bt-reset {
 +			rockchip,pins = <0 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
-+		bt_wake_l: bt-wake-l {
++
++		bt_wake: bt-wake {
 +			rockchip,pins = <2 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
@@ -898,6 +967,34 @@ index 00000000..eac77f2a
 +			rockchip,pins = <4 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
++
++	sdmmc {
++		sdmmc0_det_l: sdmmc0-det-l {
++			rockchip,pins = <0 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	spdif {
++		spdif_bus: spdif-bus {
++			rockchip,pins = <4 RK_PC0 1 &pcfg_pull_none>;
++		};
++	};
++};
++
++&hdmi_in_vopb {
++	status = "okay";
++};
++
++&hdmi_in_vopl {
++	status = "disable";
++};
++
++&dp_in_vopb {
++	status = "disable";
++};
++
++&dp_in_vopl {
++	status = "okay";
 +};
 diff --git a/configs/trv9-rk3399_defconfig b/configs/trv9-rk3399_defconfig
 new file mode 100644
