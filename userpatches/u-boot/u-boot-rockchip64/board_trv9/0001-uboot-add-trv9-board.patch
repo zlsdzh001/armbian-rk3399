@@ -50,7 +50,7 @@ new file mode 100644
 index 00000000..eac77f2a
 --- /dev/null
 +++ b/arch/arm/dts/rk3399-trv9.dts
-@@ -0,0 +1,810 @@
+@@ -0,0 +1,74 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (C) 2025 HPH
